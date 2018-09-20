@@ -20,4 +20,19 @@ function makeChange(amt, coins){
     });
 }
 
-console.log('returns 2', makeChange(14, [10, 7, 1]));
+const makeChange2 = (n, coins) => {
+    const numOfCoins = (new Array(n + 1)).fill(Infinity);
+    numOfCoins[0] = 0;
+    coins.forEach(coin => {
+      for (let amount = 0; amount < numOfCoins.length; amount++) {
+        if (coin <= amount) {
+          numOfCoins[amount] = Math.min(numOfCoins[amount], numOfCoins[amount - coin] + 1);
+        }
+      }
+
+    });
+    return numOfCoins[n] !== Infinity ? numOfCoins[n] : NaN;
+  };
+
+console.log('returns 2', makeChange2(14, [10, 7, 1]));
+console.log('returns 2', makeChange2(4, [3, 1, 2]));
